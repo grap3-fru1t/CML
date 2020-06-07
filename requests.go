@@ -1,3 +1,4 @@
+// Simple http requests package to be tested on Genius API
 package main
 
 import (
@@ -6,6 +7,7 @@ import (
     "net/http"
     "encoding/json"
     "os"
+    "strings"
 )
 
 type Configuration struct {
@@ -17,11 +19,11 @@ type Configuration struct {
 func main() {
 	// Define the URL
 	var config = read_config()
-
-    APIURL := config.Base_url + "search?q=Madonna&per_page=2" 
+	cl_args := string(os.Args[1])
+	artist_url := build_url(config, cl_args) 
     // Define the Access token
     MyToken := "Bearer " + config.Token
-    req, err := http.NewRequest(http.MethodGet, APIURL, nil)
+    req, err := http.NewRequest(http.MethodGet, artist_url, nil)
     if err != nil {
         panic(err)
     }
@@ -30,6 +32,15 @@ func main() {
     resp := send_request(req)
     defer close_request(resp)
 }
+
+func build_url(config Configuration, cl_args string) string {
+	// Make sure the full url will not have any spaces
+	artist_replacement := strings.Replace(cl_args, " ", "%20", -1)
+	// concatenate into a full URL
+	artist_url := config.Base_url + "search?q=" + artist_replacement + "&per_page=2" 
+	return artist_url
+}
+
 
 func read_config() Configuration {
 	file, _ := os.Open("config.json")
