@@ -1,5 +1,6 @@
 {
      "Port": 8080,
      "Base_url": "https://api.genius.com/",
-     "Token": "M56o52PWZHr6z0MFqCEhDshsi6qJmLRSg1C9QTzNPkHhLR_ZGlflx05LGgZ44IjG"
+     "Token": "M56o52PWZHr6z0MFqCEhDshsi6qJmLRSg1C9QTzNPkHhLR_ZGlflx05LGgZ44IjG",
+     "Per_page": "2"
 }
