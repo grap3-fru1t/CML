@@ -10,16 +10,13 @@ import (
     "strings"
 )
 
-type Configuration struct {
-    Port              int
-    Base_url          string
-    Token             string
-}
+
 
 func main() {
 	// Define the URL
 	var config = read_config()
 	cl_args := string(os.Args[1])
+    fmt.Println(cl_args)
 	artist_url := build_url(config, cl_args) 
     // Define the Access token
     MyToken := "Bearer " + config.Token
@@ -42,17 +39,6 @@ func build_url(config Configuration, cl_args string) string {
 }
 
 
-func read_config() Configuration {
-	file, _ := os.Open("config.json")
-	defer file.Close()
-	decoder := json.NewDecoder(file)
-	configuration := Configuration{}
-	err := decoder.Decode(&configuration)
-	if err != nil {
-	  fmt.Println("Error when reading config:", err)
-	}
-	return configuration
-}
 
 func send_request(req *http.Request) *http.Response {
     // Send the request
